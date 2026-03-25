@@ -520,19 +520,6 @@
  </div>
  <button onclick="showSubscriptionPage()" class="w-full py-3 rounded-xl bg-amber-600/20 border border-amber-500/30 text-amber-400 font-medium hover:bg-amber-600/30 transition-colors">管理订阅</button>
  </div>
- <!-- Bloom AI 功能入口 -->
- <div class="grid grid-cols-2 gap-3 mb-4">
- <div onclick="showDiagnosisPage()" class="glass rounded-xl p-4 cursor-pointer hover:bg-white/10 transition-colors">
- <div class="w-10 h-10 bg-red-500/20 rounded-full flex items-center justify-center text-xl mb-2">🏥</div>
- <div class="font-semibold text-sm">病虫害诊断</div>
- <div class="text-xs text-gray-400 mt-1">拍照识别 + 治疗方案</div>
- </div>
- <div onclick="showChatPage()" class="glass rounded-xl p-4 cursor-pointer hover:bg-white/10 transition-colors">
- <div class="w-10 h-10 bg-blue-500/20 rounded-full flex items-center justify-center text-xl mb-2">🧠</div>
- <div class="font-semibold text-sm">知识问答</div>
- <div class="text-xs text-gray-400 mt-1">24h 植物专家</div>
- </div>
- </div>
  <button onclick="resetApp()" class="w-full glass rounded-xl p-4 text-red-400 border border-red-500/30 hover:bg-red-500/10 transition-colors text-sm">重置所有数据</button>
  </div>
 
@@ -595,16 +582,26 @@
  <li>🧠 <span class="text-amber-400 font-medium">大模型知识问答</span><p class="text-xs text-gray-500 mt-1 ml-0">24h 在线植物专家</p></li>
  <li>🧪 全光谱实验室</li><li>📊 生长瓶颈分析</li><li>💾 永久云存储 + 家庭共享</li>
  </ul>
- <button onclick="navigate('me')" class="w-full py-3 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 text-white font-medium">当前方案</button>
+ <button onclick="navigate('me')" class="w-full py-3 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 text-white font-medium mb-4">当前方案</button>
+ <!-- Bloom 专属 AI 演示入口 -->
+ <div class="border-t border-white/10 pt-4">
+ <div class="text-xs text-gray-400 mb-3">Bloom 专属功能体验</div>
+ <div class="grid grid-cols-2 gap-3">
+ <button onclick="showDiagnosisDemo()" class="glass rounded-xl p-3 text-center hover:bg-white/10 transition-colors">
+ <div class="w-8 h-8 bg-red-500/20 rounded-full flex items-center justify-center text-lg mb-2 mx-auto">🏥</div>
+ <div class="text-xs font-medium">体验病虫害诊断</div>
+ </button>
+ <button onclick="showChatDemo()" class="glass rounded-xl p-3 text-center hover:bg-white/10 transition-colors">
+ <div class="w-8 h-8 bg-blue-500/20 rounded-full flex items-center justify-center text-lg mb-2 mx-auto">🧠</div>
+ <div class="text-xs font-medium">体验知识问答</div>
+ </button>
+ </div>
+ </div>
  </div>
  <div class="grid grid-cols-2 gap-3">
- <div onclick="showDiagnosisPage()" class="glass rounded-xl p-4 cursor-pointer hover:bg-white/10">
- <div class="w-10 h-10 bg-red-500/20 rounded-full flex items-center justify-center text-xl mb-2">🏥</div>
  <div class="font-semibold text-sm">病虫害诊断</div>
  <div class="text-xs text-gray-400 mt-1">体验 AI 诊断</div>
  </div>
- <div onclick="showChatPage()" class="glass rounded-xl p-4 cursor-pointer hover:bg-white/10">
- <div class="w-10 h-10 bg-blue-500/20 rounded-full flex items-center justify-center text-xl mb-2">🧠</div>
  <div class="font-semibold text-sm">知识问答</div>
  <div class="text-xs text-gray-400 mt-1">体验 AI 专家</div>
  </div>
@@ -764,17 +761,29 @@
  });
  }
 
+ // ===== AI 演示入口（从订阅页 Bloom 档进入）=====
+ function showDiagnosisDemo() {
+ document.getElementById('page-subscription').classList.remove('active');
+ document.getElementById('page-diagnosis').classList.add('active');
+ document.getElementById('bottom-nav').classList.add('hidden');
+ }
+
+ function showChatDemo() {
+ document.getElementById('page-subscription').classList.remove('active');
+ document.getElementById('page-chat').classList.add('active');
+ document.getElementById('bottom-nav').classList.add('hidden');
+ }
+
  // ===== AI 病虫害诊断 =====
  function showDiagnosisPage() {
- diagnosisSource = currentPage;
- document.querySelectorAll('#main-app .page').forEach(p => p.classList.remove('active'));
+ document.getElementById('page-subscription').classList.remove('active');
  document.getElementById('page-diagnosis').classList.add('active');
  document.getElementById('bottom-nav').classList.add('hidden');
  }
 
  function backFromDiagnosis() {
  document.getElementById('page-diagnosis').classList.remove('active');
- document.getElementById('page-' + diagnosisSource).classList.add('active');
+ document.getElementById('page-subscription').classList.add('active');
  document.getElementById('bottom-nav').classList.remove('hidden');
  }
 
@@ -794,15 +803,14 @@
 
  // ===== AI 知识问答 =====
  function showChatPage() {
- chatSource = currentPage;
- document.querySelectorAll('#main-app .page').forEach(p => p.classList.remove('active'));
+ document.getElementById('page-subscription').classList.remove('active');
  document.getElementById('page-chat').classList.add('active');
  document.getElementById('bottom-nav').classList.add('hidden');
  }
 
  function backFromChat() {
  document.getElementById('page-chat').classList.remove('active');
- document.getElementById('page-' + chatSource).classList.add('active');
+ document.getElementById('page-subscription').classList.add('active');
  document.getElementById('bottom-nav').classList.remove('hidden');
  }
 
